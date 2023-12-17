@@ -22,25 +22,25 @@ from itertools import (
     batched,
 )
 
-from .applier import smart_partial
+from .applier import smart_partial as _smart_partial
 
-count @= smart_partial
-cycle @= smart_partial
-repeat @= smart_partial
-accumulate @= smart_partial
-chain @= smart_partial
-compress @= smart_partial
-dropwhile @= smart_partial
-filterfalse @= smart_partial
-groupby @= smart_partial
-islice @= smart_partial
-starmap @= smart_partial
-takewhile @= smart_partial
-tee @= smart_partial
-zip_longest @= smart_partial
-product @= smart_partial
-permutations @= smart_partial
-combinations @= smart_partial
-combinations_with_replacement @= smart_partial
-pairwise @= smart_partial
-batched @= smart_partial
+count @= _smart_partial
+cycle @= _smart_partial
+repeat @= _smart_partial
+accumulate @= _smart_partial
+chain @= _smart_partial
+compress @= _smart_partial
+dropwhile @= _smart_partial
+filterfalse @= _smart_partial
+groupby @= _smart_partial
+islice @= _smart_partial
+starmap @= _smart_partial
+takewhile @= _smart_partial
+tee @= _smart_partial
+zip_longest @= _smart_partial
+product @= _smart_partial
+permutations @= _smart_partial
+combinations @= _smart_partial
+combinations_with_replacement @= _smart_partial
+pairwise @= _smart_partial
+batched @= _smart_partial

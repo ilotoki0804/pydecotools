@@ -1,8 +1,4 @@
-from .applier import (
-    pipeline as _pipeline,
-    DecoratorOperatorMeta as _DecoratorOperatorMeta,
-    smart_partial as _smart_partial,
-)
+from .applier import smart_partial as _smart_partial
 
 abs @= _smart_partial
 aiter @= _smart_partial
