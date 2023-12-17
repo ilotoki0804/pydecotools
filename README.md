@@ -40,7 +40,7 @@ or chat :wink:
 Currently, none of the projects using this repository.
 
 If you use this repository as a reference for your works, let me know, so I
-list your work above, as well.
+list your work above<!--, as well-->.
 
 ## Changelog
 
