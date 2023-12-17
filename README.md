@@ -44,6 +44,12 @@ list your work above<!--, as well-->.
 
 ## Changelog
 
-### v0.1.0
+### v0.2.0 (12/17/2023)
+
+* Refine README
+* Make smart_partial internal
+* Remove github actions
+
+### v0.1.0 (12/17/2023)
 
 * Initial release
