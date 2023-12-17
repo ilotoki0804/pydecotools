@@ -10,7 +10,7 @@
 
 ## Summary
 
-This library offers a selection of tools that can be used advantageously when employing decorators.
+This library offers tools that can be used when employing decorators.
 
 <!-- ## Motivation -->
 
@@ -21,7 +21,7 @@ files. Thanks, everyone, for keeping open discussions on internet. -->
 
 ## How to use this repository
 
-The `documentation` pages explain how to use this template for your projects
+The markdown file in `docs` directory explain how to use this library for your projects
 and the implementation details adopted here.
 <!-- The documentation pages also serve
 to demonstrate how to compile documentation with Sphinx and deploy it online
