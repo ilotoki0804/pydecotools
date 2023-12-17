@@ -1,10 +1,10 @@
 # pydecotools
 
-![[CI](https://github.com/ilotoki0804/pydecotools/workflows/ci/badge.svg?branch=main)](https://github.com/ilotoki0804/pydecotools/actions?workflow=ci)
+<!-- ![[CI](https://github.com/ilotoki0804/pydecotools/workflows/ci/badge.svg?branch=main)](https://github.com/ilotoki0804/pydecotools/actions?workflow=ci)
 [![Codecov](https://codecov.io/gh/ilotoki0804/pydecotools/branch/main/graph/badge.svg)](https://codecov.io/gh/ilotoki0804/pydecotools)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d96cc9a1841a819cd4f5/maintainability)](https://codeclimate.com/github/ilotoki0804/pydecotools/maintainability)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ilotoki0804/pydecotools)](https://codeclimate.com/github/ilotoki0804/pydecotools)
-[![Read the Docs](https://img.shields.io/readthedocs/pydecotools/latest?label=Read%20the%20Docs)](https://pydecotools.readthedocs.io/en/latest/index.html)
+[![Read the Docs](https://img.shields.io/readthedocs/pydecotools/latest?label=Read%20the%20Docs)](https://pydecotools.readthedocs.io/en/latest/index.html) -->
 
 **The collection of decorator utilities.**
 
