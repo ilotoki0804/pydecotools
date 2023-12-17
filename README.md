@@ -42,6 +42,10 @@ Currently, none of the projects using this repository.
 If you use this repository as a reference for your works, let me know, so I
 list your work above<!--, as well-->.
 
+## Copyright
+
+[joaomcteixeira's python-project-skeleton](https://github.com/joaomcteixeira/python-project-skeleton) is used for this project.
+
 ## Changelog
 
 ### v0.2.0 (12/17/2023)
