@@ -9,7 +9,7 @@ from itertools import (
     dropwhile,
     filterfalse,
     groupby,
-    islice,
+    islice as _islice,
     starmap,
     takewhile,
     tee,
@@ -24,6 +24,15 @@ from itertools import (
 
 from .applier import smart_partial as _smart_partial
 
+
+@_smart_partial
+def islice(*args):
+    @_smart_partial
+    def wrapper(iterable):
+        return _islice(iterable, *args)
+    return wrapper
+
+
 count @= _smart_partial
 cycle @= _smart_partial
 repeat @= _smart_partial
@@ -33,7 +42,6 @@ compress @= _smart_partial
 dropwhile @= _smart_partial
 filterfalse @= _smart_partial
 groupby @= _smart_partial
-islice @= _smart_partial
 starmap @= _smart_partial
 takewhile @= _smart_partial
 tee @= _smart_partial
