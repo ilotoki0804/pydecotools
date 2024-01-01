@@ -48,6 +48,10 @@ list your work above<!--, as well-->.
 
 ## Changelog
 
+### v0.2.1 (01/01/2023)
+
+* Make islice usable
+
 ### v0.2.0 (12/17/2023)
 
 * Refine README
