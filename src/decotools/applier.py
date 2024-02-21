@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 # import builtins
-from typing import Callable
+from typing import Callable, TypeVar, Generic
+
+T, U, V, W = TypeVar("T"), TypeVar("U"), TypeVar("V"), TypeVar("W")
 
 
 class DecoratorOperatorMeta(type):
@@ -12,7 +14,7 @@ class DecoratorOperatorMeta(type):
         return cls(other)
 
 
-class decorator[T, U, V, W](metaclass=DecoratorOperatorMeta):
+class decorator(Generic[T, U, V, W], metaclass=DecoratorOperatorMeta):
     """A decorator for implementing decorator operator on Python."""
 
     def __init__(self, function_or_object: Callable[[U], T] | W) -> None:
