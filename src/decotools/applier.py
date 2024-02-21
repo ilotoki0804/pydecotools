@@ -12,7 +12,7 @@ class DecoratorOperatorMeta(type):
         return cls(other)
 
 
-class pipeline[T, U, V, W](metaclass=DecoratorOperatorMeta):
+class decorator[T, U, V, W](metaclass=DecoratorOperatorMeta):
     """A decorator for implementing decorator operator on Python."""
 
     def __init__(self, function_or_object: Callable[[U], T] | W) -> None:
@@ -44,9 +44,9 @@ class pipeline[T, U, V, W](metaclass=DecoratorOperatorMeta):
         return self.target(other)
 
 
-@pipeline
+@decorator
 def smart_partial(f: Callable, *, skip_trying: bool = False):
-    @pipeline
+    @decorator
     def wrapper(*args, **kwargs):
         try:
             if skip_trying:
@@ -54,7 +54,7 @@ def smart_partial(f: Callable, *, skip_trying: bool = False):
             return f(*args, **kwargs)
         except TypeError:
             # Parameter was incomplete
-            @pipeline
+            @decorator
             def inner(*inner_args, **inner_kwargs):
                 return f(*args, *inner_args, **(kwargs | inner_kwargs))
             return inner
