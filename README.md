@@ -48,16 +48,20 @@ list your work above<!--, as well-->.
 
 ## Changelog
 
-### v0.2.1 (01/01/2023)
+### v0.2.2 (2024-02-21)
+
+* Rename `pipeline` as `decorator`
+
+### v0.2.1 (2023-01-01)
 
 * Make islice usable
 
-### v0.2.0 (12/17/2023)
+### v0.2.0 (2023-12-17)
 
 * Refine README
 * Make smart_partial internal
 * Remove github actions
 
-### v0.1.0 (12/17/2023)
+### v0.1.0 (2023-12-17)
 
 * Initial release
