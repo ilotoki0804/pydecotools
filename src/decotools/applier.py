@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Callable, TypeVar, Generic
 
-T, U, V, W = TypeVar("T"), TypeVar("U"), TypeVar("V"), TypeVar("W")
+_T, _U, _V, _W = TypeVar("_T"), TypeVar("_U"), TypeVar("_V"), TypeVar("_W")
 
 
 class DecoratorOperatorMeta(type):
@@ -13,18 +13,18 @@ class DecoratorOperatorMeta(type):
         return cls(other)
 
 
-class decorator(Generic[T, U, V, W], metaclass=DecoratorOperatorMeta):
+class decorator(Generic[_T, _U, _V, _W], metaclass=DecoratorOperatorMeta):
     """A decorator for implementing decorator operator."""
 
-    def __init__(self, function_or_object: Callable[[U], T] | W) -> None:
+    def __init__(self, function_or_object: Callable[[_U], _T] | _W) -> None:
         self.target = function_or_object
 
-    def __call__(self, *args, **kwargs) -> T:  # noqa: F811
+    def __call__(self, *args, **kwargs) -> _T:  # noqa: F811
         if not callable(self.target):
             raise TypeError(f"'{type(self.target)}' object is not callable")
         return self.target(*args, **kwargs)
 
-    def __matmul__(self, other: Callable[[Callable[[U], T] | W], V]) -> V:
+    def __matmul__(self, other: Callable[[Callable[[_U], _T] | _W], _V]) -> _V:
         """__matmul__ is not needed if pipeline implementation is being default.
 
         ```python
@@ -34,7 +34,7 @@ class decorator(Generic[T, U, V, W], metaclass=DecoratorOperatorMeta):
         """
         return other(self.target)
 
-    def __rmatmul__(self, other: U) -> T:
+    def __rmatmul__(self, other: _U) -> _T:
         """
         ```python
         argument @ pipeline_func
