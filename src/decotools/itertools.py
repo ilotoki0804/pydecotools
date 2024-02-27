@@ -4,7 +4,7 @@ from itertools import (
     cycle,
     repeat,
     accumulate,
-    chain,
+    chain as _chain,
     compress,
     dropwhile,
     filterfalse,
@@ -20,7 +20,7 @@ from itertools import (
     combinations_with_replacement,
 )
 
-from .applier import smart_partial as _smart_partial
+from .applier import smart_partial as _smart_partial, decorator as _decorator
 
 
 @_smart_partial
@@ -35,7 +35,8 @@ count @= _smart_partial
 cycle @= _smart_partial
 repeat @= _smart_partial
 accumulate @= _smart_partial
-chain @= _smart_partial
+chain = _chain @_decorator
+chain.from_iterable = _chain.from_iterable @_decorator
 compress @= _smart_partial
 dropwhile @= _smart_partial
 filterfalse @= _smart_partial

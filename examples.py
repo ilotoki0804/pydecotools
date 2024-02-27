@@ -9,4 +9,4 @@ from src.decotools.itertools import *
 # without decorator: print(sum(list(bytes(str(list(filter(lambda x: x % 7 != 0, map(lambda x: x ** 2, range(100))))), encoding="utf-8"))))
 
 100 @range @list @map(str) @decorator @" | ".join @print
-# withoud decorator: print("|".join(map(str, list(range(100)))))
+# without decorator: print(" | ".join(map(str, list(range(100)))))
