@@ -18,8 +18,6 @@ from itertools import (
     permutations,
     combinations,
     combinations_with_replacement,
-    pairwise,
-    batched,
 )
 
 from .applier import smart_partial as _smart_partial
@@ -50,5 +48,11 @@ product @= _smart_partial
 permutations @= _smart_partial
 combinations @= _smart_partial
 combinations_with_replacement @= _smart_partial
-pairwise @= _smart_partial
-batched @= _smart_partial
+
+with _suppress(ImportError):
+    from itertools import pairwise  # type: ignore
+    pairwise @= _smart_partial
+
+with _suppress(ImportError):
+    from itertools import batched  # type: ignore
+    batched @= _smart_partial

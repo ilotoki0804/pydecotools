@@ -1,9 +1,14 @@
+from contextlib import suppress as _suppress
+
 from .applier import smart_partial as _smart_partial
 
+
+with _suppress(NameError):
+    anext @= _smart_partial  # type: ignore
+    aiter @= _smart_partial  # type: ignore
+
 abs @= _smart_partial
-aiter @= _smart_partial
 all @= _smart_partial
-anext @= _smart_partial
 any @= _smart_partial
 ascii @= _smart_partial
 bin @= _smart_partial

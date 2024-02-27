@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-# import builtins
 from typing import Callable, TypeVar, Generic
 
 T, U, V, W = TypeVar("T"), TypeVar("U"), TypeVar("V"), TypeVar("W")
@@ -15,12 +14,12 @@ class DecoratorOperatorMeta(type):
 
 
 class decorator(Generic[T, U, V, W], metaclass=DecoratorOperatorMeta):
-    """A decorator for implementing decorator operator on Python."""
+    """A decorator for implementing decorator operator."""
 
     def __init__(self, function_or_object: Callable[[U], T] | W) -> None:
         self.target = function_or_object
 
-    def __call__(self, *args, **kwargs) -> T:
+    def __call__(self, *args, **kwargs) -> T:  # noqa: F811
         if not callable(self.target):
             raise TypeError(f"'{type(self.target)}' object is not callable")
         return self.target(*args, **kwargs)
@@ -58,7 +57,7 @@ def smart_partial(f: Callable, *, skip_trying: bool = False):
             # Parameter was incomplete
             @decorator
             def inner(*inner_args, **inner_kwargs):
-                return f(*args, *inner_args, **(kwargs | inner_kwargs))
+                return f(*args, *inner_args, **kwargs, **inner_kwargs)
             return inner
     return wrapper
 
