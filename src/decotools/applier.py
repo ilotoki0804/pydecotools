@@ -46,14 +46,18 @@ class decorator(Generic[_T, _U, _V, _W], metaclass=DecoratorOperatorMeta):
 
 
 @decorator
-def smart_partial(f: Callable, *, skip_trying: bool = False):
+def smart_partial(f: Callable, /, *, skip_trying: bool = False):
     @decorator
     def wrapper(*args, **kwargs):
         try:
             if skip_trying:
-                raise TypeError()
+                raise TypeError("argument")
             return f(*args, **kwargs)
-        except TypeError:
+        except TypeError as e:
+            if "argument" not in e.args[0]:
+                # Error message must have `argument` if the error is related to parameter incomplete error.
+                raise
+
             # Parameter was incomplete
             @decorator
             def inner(*inner_args, **inner_kwargs):
