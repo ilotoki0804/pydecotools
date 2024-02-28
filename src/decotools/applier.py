@@ -7,7 +7,7 @@ _TargetInput = TypeVar("_TargetInput")
 _OtherReturn = TypeVar("_OtherReturn")
 
 
-class DecoratorOperatorMeta(type):
+class DecoratorMeta(type):
     def __matmul__(cls, other):
         return other(cls)
 
@@ -15,7 +15,7 @@ class DecoratorOperatorMeta(type):
         return cls(other)
 
 
-class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorOperatorMeta):
+class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
 
     def __init__(self, func: Callable[[_TargetInput], _TargetReturn]) -> None:

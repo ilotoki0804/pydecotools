@@ -16,7 +16,7 @@ __status__ = (1, "Planning")
 __is_deprecated__ = False
 
 from .applier import (
-    DecoratorOperatorMeta,
+    DecoratorMeta,
     decorator,
     smart_partial,
 )
