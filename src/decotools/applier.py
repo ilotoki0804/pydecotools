@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import Callable, TypeVar, Generic
 
-_T, _U, _V, _W = TypeVar("_T"), TypeVar("_U"), TypeVar("_V"), TypeVar("_W")
+_TargetReturn = TypeVar("_TargetReturn")
+_TargetInput = TypeVar("_TargetInput")
+_OtherReturn = TypeVar("_OtherReturn")
 
 
 class DecoratorOperatorMeta(type):
@@ -13,35 +15,31 @@ class DecoratorOperatorMeta(type):
         return cls(other)
 
 
-class decorator(Generic[_T, _U, _V, _W], metaclass=DecoratorOperatorMeta):
+class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorOperatorMeta):
     """A decorator for implementing decorator operator."""
 
-    def __init__(self, function_or_object: Callable[[_U], _T] | _W) -> None:
-        self.target = function_or_object
+    def __init__(self, func: Callable[[_TargetInput], _TargetReturn]) -> None:
+        self.target = func
 
-    def __call__(self, *args, **kwargs) -> _T:  # noqa: F811
-        if not callable(self.target):
-            raise TypeError(f"'{type(self.target)}' object is not callable")
+    def __call__(self, *args, **kwargs) -> _TargetReturn:  # noqa: F811
         return self.target(*args, **kwargs)
 
-    def __matmul__(self, other: Callable[[Callable[[_U], _T] | _W], _V]) -> _V:
-        """__matmul__ is not needed if pipeline implementation is being default.
-
+    def __matmul__(self, other: Callable[[Callable[[_TargetInput], _TargetReturn]], _OtherReturn]) -> _OtherReturn:
+        """
         ```python
-        pipeline_func @ no_pipeline_func
-        ==> no_pipeline_func(pipeline_func)
+        decoratable_func @ normal_func
+        ==> normal_func(decoratable_func)
         ```
         """
         return other(self.target)
 
-    def __rmatmul__(self, other: _U) -> _T:
+    def __rmatmul__(self, other: _TargetInput) -> _TargetReturn:
         """
         ```python
-        argument @ pipeline_func
-        ==> pipeline_func(argument)
+        argument @ decoratable_func
+        ==> decoratable_func(argument)
         ```
         """
-        assert callable(self.target), "The target must be callable."
         return self.target(other)
 
 
