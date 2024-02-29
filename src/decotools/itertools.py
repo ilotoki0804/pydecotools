@@ -32,9 +32,9 @@ class chain(_chain, metaclass=_DecoratorMeta):
 chain.from_iterable @= _decorator
 
 
-@_smart_partial
+@_decorator
 def islice(*args):
-    @_smart_partial
+    @_decorator
     def wrapper(iterable):
         return _islice(iterable, *args)
     return wrapper
