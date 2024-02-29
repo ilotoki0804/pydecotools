@@ -14,6 +14,37 @@ class DecoratorMeta(type):
     def __rmatmul__(cls, other):
         return cls(other)
 
+    def partial(cls, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return cls(*args, *inner_args, **kwargs, **inner_kwargs)
+        return inner
+
+
+class Decorator(metaclass=DecoratorMeta):
+    """Decorator maker for classes.
+
+    ```python
+    from decotools import Decorator
+
+    class MyDecorator(Decorator):
+        def __init__(self, arg, kwarg=None):
+            ...
+
+        def __call__(self, arg, kwarg=None):
+            ...
+
+    "hello" @MyDecorator  # equivalent to `MyDecorator("hello")`
+    "hello" @MyDecorator.partial(kwarg=123)  # equivalent to `MyDecorator("hello", kwarg=123)`
+    "hello" @MyDecorator("arg")  # equivalent to `MyDecorator("arg")("hello")
+    ```
+    """
+    def __matmul__(self, other):
+        return other(self)
+
+    def __rmatmul__(self, other):
+        return self(other)  # type: ignore
+
 
 class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
@@ -41,6 +72,12 @@ class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=De
         ```
         """
         return self.target(other)
+
+    def partial(self, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return self.target(*args, *inner_args, **kwargs, **inner_kwargs)
+        return inner
 
 
 @decorator

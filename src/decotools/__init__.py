@@ -17,6 +17,7 @@ __is_deprecated__ = False
 
 from .applier import (
     DecoratorMeta,
+    Decorator,
     decorator,
     smart_partial,
 )

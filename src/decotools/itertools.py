@@ -22,10 +22,14 @@ from itertools import (
     combinations_with_replacement,
 )
 
-from .applier import smart_partial as _smart_partial, decorator as _decorator, DecoratorMeta as _DecoratorMeta
+from .applier import (
+    smart_partial as _smart_partial,
+    decorator as _decorator,
+    Decorator as _Decorator,
+)
 
 
-class chain(_chain, metaclass=_DecoratorMeta):
+class chain(_chain, _Decorator):
     pass
 
 
