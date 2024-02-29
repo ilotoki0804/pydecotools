@@ -81,7 +81,10 @@ class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=De
 
 
 @decorator
-def smart_partial(f: Callable, /, *, skip_trying: bool = False):
+def smart_partial(f: Callable | None = None, /, *, skip_trying: bool = False) -> Callable:
+    if f is None:
+        return lambda f: smart_partial(f, skip_trying=skip_trying)
+
     @decorator
     def wrapper(*args, **kwargs):
         try:
@@ -99,5 +102,3 @@ def smart_partial(f: Callable, /, *, skip_trying: bool = False):
                 return f(*args, *inner_args, **kwargs, **inner_kwargs)
             return inner
     return wrapper
-
-smart_partial @= smart_partial  # noqa: E305
