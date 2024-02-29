@@ -23,7 +23,6 @@ from itertools import (
 )
 
 from .applier import (
-    smart_partial as _smart_partial,
     decorator as _decorator,
     Decorator as _Decorator,
 )
@@ -44,27 +43,27 @@ def islice(*args):
     return wrapper
 
 
-count @= _smart_partial
-cycle @= _smart_partial
-repeat @= _smart_partial
-accumulate @= _smart_partial
-compress @= _smart_partial
-dropwhile @= _smart_partial
-filterfalse @= _smart_partial
-groupby @= _smart_partial
-starmap @= _smart_partial
-takewhile @= _smart_partial
-tee @= _smart_partial
-zip_longest @= _smart_partial
-product @= _smart_partial
-permutations @= _smart_partial
-combinations @= _smart_partial
-combinations_with_replacement @= _smart_partial
+count @= _decorator
+cycle @= _decorator
+repeat @= _decorator
+accumulate @= _decorator
+compress @= _decorator
+dropwhile @= _decorator
+filterfalse @= _decorator
+groupby @= _decorator
+starmap @= _decorator
+takewhile @= _decorator
+tee @= _decorator
+zip_longest @= _decorator
+product @= _decorator
+permutations @= _decorator
+combinations @= _decorator
+combinations_with_replacement @= _decorator
 
 with _suppress(ImportError):
     from itertools import pairwise  # type: ignore
-    pairwise @= _smart_partial
+    pairwise @= _decorator
 
 with _suppress(ImportError):
     from itertools import batched  # type: ignore
-    batched @= _smart_partial
+    batched @= _decorator

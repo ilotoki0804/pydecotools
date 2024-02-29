@@ -10,14 +10,14 @@ from collections import (
     namedtuple,
 )
 
-from .applier import smart_partial as _smart_partial
+from .applier import decorator as _decorator
 
-ChainMap @= _smart_partial
-Counter @= _smart_partial
-OrderedDict @= _smart_partial
-UserDict @= _smart_partial
-UserList @= _smart_partial
-UserString @= _smart_partial
-defaultdict @= _smart_partial
-deque @= _smart_partial
-namedtuple @= _smart_partial
+ChainMap @= _decorator
+Counter @= _decorator
+OrderedDict @= _decorator
+UserDict @= _decorator
+UserList @= _decorator
+UserString @= _decorator
+defaultdict @= _decorator
+deque @= _decorator
+namedtuple @= _decorator
