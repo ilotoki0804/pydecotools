@@ -1,6 +1,7 @@
 from src.decotools.builtins import *
 from src.decotools.applier import *
 from src.decotools.itertools import *
+from src.decotools.utilities import *
 
 10 @range @map.partial(lambda x: x + 1) @list @print
 # without decorator: print(list(map(lambda x: x + 1, range(10))))
