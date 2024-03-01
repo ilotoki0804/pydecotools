@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Callable
 
-from .applier import decorator as _decorator
+from .applier import decorator as _decorator, Decorator as _Decorator
 
 NO_DEFAULT = object()
 
@@ -64,6 +64,6 @@ def itemchain(item):
 @_decorator
 def nonesafe(func: Callable):
     @_decorator
-    def inner(arg):
-        return None if arg is None else func(arg)
+    def inner(arg, *args, **kwargs):
+        return None if arg is None else func(arg, *args, **kwargs)
     return inner
