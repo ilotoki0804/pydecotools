@@ -17,7 +17,7 @@ class DecoratorMeta(type):
     def partial(cls, *args, **kwargs):
         @decorator
         def inner(*inner_args, **inner_kwargs):
-            return cls(*args, *inner_args, **kwargs, **inner_kwargs)
+            return cls(*inner_args, *args, **kwargs, **inner_kwargs)
         return inner
 
 
@@ -49,7 +49,7 @@ class Decorator(metaclass=DecoratorMeta):
 class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
 
-    def __init__(self, func: Callable[[_TargetInput], _TargetReturn]) -> None:
+    def __init__(self, func: Callable[[_TargetInput], _TargetReturn] | Callable) -> None:
         self.target = func
 
     def __call__(self, *args, **kwargs) -> _TargetReturn:  # noqa: F811
@@ -76,7 +76,7 @@ class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=De
     def partial(self, *args, **kwargs):
         @decorator
         def inner(*inner_args, **inner_kwargs):
-            return self.target(*args, *inner_args, **kwargs, **inner_kwargs)
+            return self.target(*inner_args, *args, **kwargs, **inner_kwargs)
         return inner
 
 
