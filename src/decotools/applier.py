@@ -49,13 +49,16 @@ class Decorator(metaclass=DecoratorMeta):
 class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
 
-    def __init__(self, func: Callable[[_TargetInput], _TargetReturn] | Callable) -> None:
+    def __init__(self, func: Callable[[_TargetInput], _TargetReturn] | Callable[..., _TargetReturn]) -> None:
         self.target = func
 
     def __call__(self, *args, **kwargs) -> _TargetReturn:  # noqa: F811
         return self.target(*args, **kwargs)
 
-    def __matmul__(self, other: Callable[[Callable[[_TargetInput], _TargetReturn]], _OtherReturn]) -> _OtherReturn:
+    def __matmul__(
+        self,
+        other: Callable[[Callable[[_TargetInput], _TargetReturn] | Callable[..., _TargetReturn]], _OtherReturn]
+    ) -> _OtherReturn:
         """
         ```python
         decoratable_func @ normal_func
