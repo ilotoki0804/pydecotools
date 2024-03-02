@@ -45,6 +45,12 @@ class Decorator(metaclass=DecoratorMeta):
     def __rmatmul__(self, other):
         return self(other)  # type: ignore
 
+    def partial(self, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return self(*inner_args, *args, **kwargs, **inner_kwargs)  # type: ignore
+        return inner
+
 
 class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
