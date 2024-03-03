@@ -17,6 +17,12 @@ class DecoratorMeta(type):
     def partial(cls, *args, **kwargs):
         @decorator
         def inner(*inner_args, **inner_kwargs):
+            return cls(*args, *inner_args, **kwargs, **inner_kwargs)
+        return inner
+
+    def supply(cls, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
             return cls(*inner_args, *args, **kwargs, **inner_kwargs)
         return inner
 
@@ -46,6 +52,12 @@ class Decorator(metaclass=DecoratorMeta):
         return self(other)  # type: ignore
 
     def partial(self, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return self(*args, *inner_args, **kwargs, **inner_kwargs)  # type: ignore
+        return inner
+
+    def supply(self, *args, **kwargs):
         @decorator
         def inner(*inner_args, **inner_kwargs):
             return self(*inner_args, *args, **kwargs, **inner_kwargs)  # type: ignore
@@ -83,6 +95,12 @@ class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=De
         return self.target(other)
 
     def partial(self, *args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return self.target(*args, *inner_args, **kwargs, **inner_kwargs)
+        return inner
+
+    def supply(self, *args, **kwargs):
         @decorator
         def inner(*inner_args, **inner_kwargs):
             return self.target(*inner_args, *args, **kwargs, **inner_kwargs)

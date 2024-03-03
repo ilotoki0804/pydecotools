@@ -11,3 +11,5 @@ from src.decotools.utilities import *
 
 100 @range @list @map.partial(str) @decorator @" | ".join @print
 # without decorator: print(" | ".join(map(str, list(range(100)))))
+
+"hello world" @getattr.supply("split") @call() @print
