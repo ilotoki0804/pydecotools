@@ -24,11 +24,11 @@ from itertools import (
 
 from .applier import (
     decorator as _decorator,
-    Decorator as _Decorator,
+    DecoratorMeta as _DecoratorMeta,
 )
 
 
-class chain(_chain, _Decorator):
+class chain(_chain, metaclass=_DecoratorMeta):
     pass
 
 
