@@ -13,3 +13,5 @@ print(100 @range @list @map.partial(str) @decorator(" | ".join))
 # without decorator: print(" | ".join(map(str, list(range(100)))))
 
 print("hello world" @getattr.supply("split") @call())
+
+print(["hello", "world"] @decorator(chain.from_iterable) @list)  # type: ignore

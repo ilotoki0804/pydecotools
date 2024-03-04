@@ -9,6 +9,8 @@ _T = TypeVar("_T")
 
 
 class DecoratorMeta(type):
+    """Make classes decoratable."""
+
     def __matmul__(cls: type[_T], other) -> _T:
         return other(cls)
 
@@ -29,23 +31,6 @@ class DecoratorMeta(type):
 
 
 class Decorator(metaclass=DecoratorMeta):
-    """Decorator maker for classes.
-
-    ```python
-    from decotools import Decorator
-
-    class MyDecorator(Decorator):
-        def __init__(self, arg, kwarg=None):
-            ...
-
-        def __call__(self, arg, kwarg=None):
-            ...
-
-    "hello" @MyDecorator  # equivalent to `MyDecorator("hello")`
-    "hello" @MyDecorator.partial(kwarg=123)  # equivalent to `MyDecorator("hello", kwarg=123)`
-    "hello" @MyDecorator("arg")  # equivalent to `MyDecorator("arg")("hello")
-    ```
-    """
     def __matmul__(self, other):
         return other(self)
 
