@@ -1,28 +1,29 @@
 from __future__ import annotations
 
-from typing import Callable, TypeVar, Generic
+from typing import Any, Callable, TypeVar, Generic
 
 _TargetReturn = TypeVar("_TargetReturn")
 _TargetInput = TypeVar("_TargetInput")
 _OtherReturn = TypeVar("_OtherReturn")
+_T = TypeVar("_T")
 
 
 class DecoratorMeta(type):
-    def __matmul__(cls, other):
+    def __matmul__(cls: type[_T], other) -> _T:
         return other(cls)
 
-    def __rmatmul__(cls, other):
+    def __rmatmul__(cls: type[_T], other) -> _T:
         return cls(other)
 
-    def partial(cls, *args, **kwargs):
+    def partial(cls: type[_T], *args, **kwargs) -> decorator[Any, _T, Any]:
         @decorator
-        def inner(*inner_args, **inner_kwargs):
+        def inner(*inner_args, **inner_kwargs) -> _T:
             return cls(*args, *inner_args, **kwargs, **inner_kwargs)
         return inner
 
-    def supply(cls, *args, **kwargs):
+    def supply(cls: type[_T], *args, **kwargs) -> decorator[Any, _T, Any]:
         @decorator
-        def inner(*inner_args, **inner_kwargs):
+        def inner(*inner_args, **inner_kwargs) -> _T:
             return cls(*inner_args, *args, **kwargs, **inner_kwargs)
         return inner
 
@@ -64,7 +65,7 @@ class Decorator(metaclass=DecoratorMeta):
         return inner
 
 
-class decorator(Generic[_TargetReturn, _TargetInput, _OtherReturn], metaclass=DecoratorMeta):
+class decorator(Generic[_TargetInput, _TargetReturn, _OtherReturn], metaclass=DecoratorMeta):
     """A decorator for implementing decorator operator."""
 
     def __init__(self, func: Callable[[_TargetInput], _TargetReturn] | Callable[..., _TargetReturn]) -> None:
