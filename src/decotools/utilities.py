@@ -67,3 +67,28 @@ def nonesafe(func: Callable):
     def inner(arg, *args, **kwargs):
         return None if arg is None else func(arg, *args, **kwargs)
     return inner
+
+
+@_decorator
+def method(__name: str, /, *args, **kwargs):
+    @_decorator
+    def inner(value):
+        return getattr(value, __name)(*args, **kwargs)
+    return inner
+
+
+@_decorator
+def methodchain(__name: str, /, *args, **kwargs):
+    @_decorator
+    def inner(value):
+        if value is None:
+            return None
+        method = getattr(value, __name, None)
+        return None if method is None else method(*args, **kwargs)
+    return inner
+
+
+@_decorator
+def debug(value):
+    print(repr(value))
+    return value
