@@ -94,6 +94,18 @@ class decorator(Generic[_TargetInput, _TargetReturn, _OtherReturn], metaclass=De
 
 
 @decorator
+def decorator_flow(func: Callable[..., _TargetReturn]):
+    """Make a function which not designed for decorators follow the decorator flow."""
+    @decorator
+    def wrapper(*args, **kwargs):
+        @decorator
+        def inner(*inner_args, **inner_kwargs):
+            return func(*args, *inner_args, **kwargs, **inner_kwargs)
+        return inner
+    return wrapper
+
+
+@decorator
 def smart_partial(f: Callable | None = None, /, *, skip_trying: bool = False) -> Callable:
     if f is None:
         return lambda f: smart_partial(f, skip_trying=skip_trying)
