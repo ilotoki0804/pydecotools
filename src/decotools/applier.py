@@ -1,12 +1,17 @@
 from __future__ import annotations
+from ast import TypeAlias
+from contextlib import suppress
 
-from typing import Any, Callable, TypeVar, Generic
+from typing import TYPE_CHECKING, Any, Callable, TypeVar, Generic, overload
+
+if TYPE_CHECKING:
+    from typing import Self
 
 _TargetReturn = TypeVar("_TargetReturn")
 _TargetInput = TypeVar("_TargetInput")
 _OtherReturn = TypeVar("_OtherReturn")
 _T = TypeVar("_T")
-
+_MISSING = object()
 
 class DecoratorMeta(type):
     """Make classes decoratable."""
@@ -30,24 +35,60 @@ class DecoratorMeta(type):
         return inner
 
 
-class Decorator(metaclass=DecoratorMeta):
+class _PartialDispatcher(DecoratorMeta):
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        self = super().__call__(*args, **kwds)
+
+        def partial(*args, **kwargs):
+            @decorator
+            def inner(*inner_args, **inner_kwargs):
+                return self(*args, *inner_args, **kwargs, **inner_kwargs)  # type: ignore
+            return inner
+
+        def supply(*args, **kwargs):
+            @decorator
+            def inner(*inner_args, **inner_kwargs):
+                return self(*inner_args, *args, **kwargs, **inner_kwargs)  # type: ignore
+            return inner
+
+        with suppress(Exception):
+            self.partial = partial
+        with suppress(Exception):
+            self.supply = supply
+
+        return self
+
+
+class Decorator(metaclass=_PartialDispatcher):
     def __matmul__(self, other):
         return other(self)
 
     def __rmatmul__(self, other):
         return self(other)  # type: ignore
 
-    def partial(self, *args, **kwargs):
-        @decorator
-        def inner(*inner_args, **inner_kwargs):
-            return self(*args, *inner_args, **kwargs, **inner_kwargs)  # type: ignore
-        return inner
+    if TYPE_CHECKING:
+        @overload
+        def partial(*args: Any, **kwargs) -> decorator[Any, Self, Any]:
+            ...
 
-    def supply(self, *args, **kwargs):
-        @decorator
-        def inner(*inner_args, **inner_kwargs):
-            return self(*inner_args, *args, **kwargs, **inner_kwargs)  # type: ignore
-        return inner
+        @overload
+        def partial(self, *args, **kwargs) -> decorator:
+            ...
+
+        def partial(*args, **kwargs) -> decorator:
+            """Implementation details are on `_PartialDispatcher`."""
+            ...
+
+        @overload
+        def supply(*args: Any, **kwargs) -> decorator[Any, Self, Any]:
+            ...
+
+        @overload
+        def supply(self, *args, **kwargs) -> decorator:
+            ...
+
+        def supply(*args, **kwargs) -> decorator:
+            ...
 
 
 class decorator(Generic[_TargetInput, _TargetReturn, _OtherReturn], metaclass=DecoratorMeta):

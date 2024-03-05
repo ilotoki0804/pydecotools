@@ -35,5 +35,18 @@ print(
 print(" | ".join(map(str, list(range(100)))))
 
 
+class CallableClass(Decorator):
+    def __init__(self, prevalue, value):
+        self.value = value
+
+    def print(self):
+        print(self.value)
+
+    def __call__(self, arg):
+        print(self.value, arg)
+
+callableobj = "hello" @CallableClass.partial("prevalue")
+"printit" @callableobj
+
 print("hello world" @getattr.supply("split") @call())
 print(["hello", "world"] @decorator(chain.from_iterable) @decorator("".join))  # type: ignore
