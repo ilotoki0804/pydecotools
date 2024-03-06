@@ -68,7 +68,7 @@ class Decorator(metaclass=_PartialDispatcher):
 
     if TYPE_CHECKING:
         @overload
-        def partial(*args: Any, **kwargs) -> decorator[Any, Self, Any]:
+        def partial(*args: Any, **kwargs) -> decorator[Any, Self, Any]:  # type: ignore
             ...
 
         @overload
@@ -80,7 +80,7 @@ class Decorator(metaclass=_PartialDispatcher):
             ...
 
         @overload
-        def supply(*args: Any, **kwargs) -> decorator[Any, Self, Any]:
+        def supply(*args: Any, **kwargs) -> decorator[Any, Self, Any]:  # type: ignore
             ...
 
         @overload
