@@ -92,3 +92,8 @@ def methodchain(__name: str, /, *args, **kwargs):
 def debug(value):
     print(repr(value))
     return value
+
+
+@_decorator
+def no_op(value):
+    return value
